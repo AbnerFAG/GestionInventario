@@ -1,28 +1,36 @@
 ﻿using CapaDatos;
 using CapaEntidad;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CapaNegocio
 {
     public class NProduct
     {
-        private readonly DProduct ProductData = new DProduct();
+        private readonly DProduct productData = new DProduct();
 
         public List<Product> ObtenerProductosActivos()
         {
-            return ProductData.Listar();
+            return productData.Listar();
         }
 
         public List<Product> BuscarProductosPorNombre(string nombre)
         {
-            var productos = ProductData.Listar();
+            return productData.BuscarPorNombre(nombre);
+        }
 
-            var resultado = productos.Where(x => x.Name.Contains(nombre)).ToList();
-            return resultado;
+        public bool InsertarProducto(Product producto)
+        {
+            return productData.Insertar(producto);
+        }
+
+        public bool ActualizarProducto(Product producto)
+        {
+            return productData.Actualizar(producto);
+        }
+
+        public bool EliminarProducto(int productId)
+        {
+            return productData.Eliminar(productId);
         }
     }
 }

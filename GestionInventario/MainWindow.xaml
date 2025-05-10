@@ -5,27 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionInventario"
         mc:Ignorable="d"
-        Title="Buscar Productos" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
+        Title="Gestión de Productos" Height="500" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Background="#F4F6FA">
 
-    <Grid Margin="10">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Barra de búsqueda -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <Label Content="Nombre del producto:" VerticalAlignment="Center"/>
-            <TextBox x:Name="txtNombreProducto" Width="200" Margin="10,0"/>
-            <Button Content="Buscar" Width="100" Click="BtnBuscar_Click"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+            <Label Content="🔎 Nombre del producto:" VerticalAlignment="Center" FontWeight="Bold"/>
+            <TextBox x:Name="txtNombreProducto" Width="200" Margin="10,0" Padding="5"/>
+            <Button Content="Buscar" Width="100" Click="BtnBuscar_Click" Margin="10,0" Padding="5"/>
         </StackPanel>
 
-        <!-- Resultados -->
+        <!-- DataGrid de productos -->
         <DataGrid x:Name="dgProductos"
                   Grid.Row="1"
-                  AutoGenerateColumns="True"
+                  AutoGenerateColumns="False"
                   IsReadOnly="True"
-                  CanUserAddRows="False"/>
+                  CanUserAddRows="False"
+                  HeadersVisibility="Column"
+                  AlternatingRowBackground="#E9F1FB"
+                  RowBackground="White"
+                  Margin="0,0,0,10"
+                  FontSize="14">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ProductId}" Width="50"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Precio" Binding="{Binding Price}" Width="100" />
+                <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="100"/>
+                <DataGridTemplateColumn Header="Acciones" Width="160">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="✏️" ToolTip="Editar" Click="BtnEditar_Click" Tag="{Binding ProductId}" Margin="5,0"/>
+                                <Button Content="🗑️" ToolTip="Eliminar" Click="BtnEliminar_Click" Tag="{Binding ProductId}" Margin="5,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Botón nuevo producto -->
+        <Button Content="➕ Nuevo Producto"
+                Grid.Row="2"
+                HorizontalAlignment="Right"
+                Padding="10,5"
+                Click="BtnNuevo_Click"/>
     </Grid>
 </Window>
